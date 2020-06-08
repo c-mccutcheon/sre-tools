@@ -1,3 +1,9 @@
+###
+#
+# This script is used to create organisation & project level groups for new project creation and performs most of 
+# the standard assignments in line with the IAM documentation in confluence here:
+# https://confluence.devops.lloydsbanking.com/pages/viewpage.action?pageId=367101137
+#
 ### Params to pass in
 param(
     [string] 
