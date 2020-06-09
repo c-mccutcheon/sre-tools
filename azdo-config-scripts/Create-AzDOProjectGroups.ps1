@@ -30,10 +30,12 @@ $orgGroups = [ordered]@{
 #Defines the list of Project level groups to be created
 $prjGroups = [ordered]@{
     "SignOff_Cyber" = "Sign off groups for changes requiring Cyber Security approval";
+    "SignOff_IAM" = "Sign off group for IAM related changes";
     "SignOff_NetSec" = "Sign off group for Network Security related changes";
     "SignOff_PolicyOwner" = "Sign off group for Policy Owners";
     "SignOff_ReleaseMgmt" = "Sign off group for where a release needs approval";
     "SignOff_SeniorEng" = "Sign off group for senior engineers";
+    "Signoff_Strategy" = "Sign off group Strategy & Direction Team";
     "SignOff_SRE" = "Sign off group for SRE";
     "SignOff_WAGF" = "Sign off group for WAFG changes";
     "Service Accounts" = "Team for non-human service accounts that perform automated tasks"
@@ -136,11 +138,13 @@ $grpHash = Create-GroupsHash
 # now add the org (& project) level groups as member od the right project groups
 Add-Groups -groups $grpHash -parent "$project/SignOff_Cyber"                    -children @("$org/ADO_CNEB_$($prjAbrv)_CyberEng")
 Add-Groups -groups $grpHash -parent "$project/SignOff_NetSec"                   -children @("$org/ADO_CNEB_GLO_NetSec")
+Add-Groups -groups $grpHash -parent "$project/SignOff_IAM"                      -children @("$org/ADO_CNEB_GLO_IAM")
 Add-Groups -groups $grpHash -parent "$project/SignOff_PolicyOwner"              -children @("$org/ADO_CNEB_GLO_PolicyOwner")
 Add-Groups -groups $grpHash -parent "$project/SignOff_ReleaseMgmt"              -children @("$org/ADO_CNEB_$($prjAbrv)_ProjectMgmt")
 Add-Groups -groups $grpHash -parent "$project/SignOff_SeniorEng"                -children @("$org/ADO_CNEB_$($prjAbrv)_DevLeads",
                                                                                             "$org/ADO_CNEB_$($prjAbrv)_SnrDevs")
 Add-Groups -groups $grpHash -parent "$project/SignOff_SRE"                      -children @("$org/ADO_CNEB_$($prjAbrv)_LabSRE")
+Add-Groups -groups $grpHash -parent "$project/SignOff_Strategy"                 -children @("$org/ADO_CNEB_GLO_Strategy")
 Add-Groups -groups $grpHash -parent "$project/SignOff_WAGF"                     -children @("$org/ADO_CNEB_GLO_WAGF")
 
 Add-Groups -groups $grpHash -parent "$project/Build Administrators"             -children @("$project/Service Accounts",
