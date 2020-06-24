@@ -31,12 +31,15 @@ if ($prod) {
         "ADO_CNEL_PRJ_Guest" = "PROJ - Guest user with reader permissions to the Project";
         "ADO_CNEL_PRJ_LabSRE" = "PROJ - Guest user with reader permissions to the Project";
         "ADO_CNEL_PRJ_ProjectMgmt" = "PROJ - Group for the Project Management function, purpose is to act as the release gate where process requires it";
+        "ADO_CNEL_PRJ_SnrEng" = "PROJ - Senior Engineers are generally responsible for a more senior level of approval in the PR process";
         "ADO_CNEL_PRJ_SrvAcc" = "PROJ - Project level service account"
     }
 
     #Defines the list of Project level groups to be created
     $prjGroups = [ordered]@{
         "SignOff_ReleaseMgmt" = "Sign off group for where a release needs approval";
+        "SignOff_SeniorEng" = "Sign off group for senior engineers";
+        "SignOff_SRE" = "Sign off group for SRE";   
         "Service Accounts" = "Team for non-human service accounts that perform automated tasks"
     }
 }
@@ -162,7 +165,10 @@ $prjGroups.GetEnumerator() | ForEach-Object {
 $grpHash = Create-GroupsHash
 
 if ($prod) {
+    Add-Groups -groups $grpHash -parent "$org/ADO_CNEL_$($prjAbrv)_LabSRE"          -children @("$org/ADO_CNEL_$($prjAbrv)_SnrEng")
     Add-Groups -groups $grpHash -parent "$project/SignOff_ReleaseMgmt"              -children @("$org/ADO_CNEL_$($prjAbrv)_ProjectMgmt")
+    Add-Groups -groups $grpHash -parent "$project/SignOff_SeniorEng"                -children @("$org/ADO_CNEL_$($prjAbrv)_SnrEng")
+    Add-Groups -groups $grpHash -parent "$project/SignOff_SRE"                      -children @("$org/ADO_CNEL_$($prjAbrv)_LabSRE")
     Add-Groups -groups $grpHash -parent "$project/Build Administrators"             -children @("$project/Service Accounts")
     Add-Groups -groups $grpHash -parent "$project/Contributors"                     -children @("$org/ADO_CNEL_$($prjAbrv)_LabSRE")
     Add-Groups -groups $grpHash -parent "$project/Endpoint Administrators"          -children @("$project/Service Accounts")
@@ -170,7 +176,9 @@ if ($prod) {
     Add-Groups -groups $grpHash -parent "$project/Readers"                          -children @("$project/Contributors",
                                                                                                 "$project/Service Accounts",
                                                                                                 "$org/ADO_CNEL_$($prjAbrv)_Guest",
-                                                                                                "$project/SignOff_ReleaseMgmt")
+                                                                                                "$project/SignOff_ReleaseMgmt",
+                                                                                                "$project/SignOff_SeniorEng",
+                                                                                                "$project/SignOff_SRE")
     Add-Groups -groups $grpHash -parent "$project/Service Accounts"                 -children @("$org/ADO_CNEL_$($prjAbrv)_SrvAcc",
                                                                                                 "$org/ADO_CNEL_GLO_SrvAcc")
 
