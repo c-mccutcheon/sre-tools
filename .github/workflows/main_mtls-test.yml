@@ -12,8 +12,8 @@ jobs:
   build-and-deploy:
     runs-on: windows-latest
     env:
-      working-directory: ../mtls-test-server
-      
+      working-directory: ../mtls-test-server/web-api
+
     steps:
     - uses: actions/checkout@master
 
