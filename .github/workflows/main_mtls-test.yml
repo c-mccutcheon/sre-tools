@@ -29,10 +29,10 @@ jobs:
         dotnet-version: '3.1.102'
 
     - name: Build with dotnet
-      run: pwd && dir && dotnet build --configuration Release
+      run: cd ./mtls-test-server/web-api && dotnet build --configuration Release
 
     - name: dotnet publish
-      run: pwd && dotnet publish -c Debug -o ${{env.DOTNET_ROOT}}/myapp
+      run: cd ./mtls-test-server/web-api && dotnet publish -c Debug -o ${{env.DOTNET_ROOT}}/myapp
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
