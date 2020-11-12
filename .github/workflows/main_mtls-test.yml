@@ -27,9 +27,12 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.1.102'
+        
+    - name: Change dir
+      run: cd ./mtls-test-server/web-api 
 
     - name: Build with dotnet
-      run: pwd && dotnet build --configuration Release
+      run: dotnet build --configuration Release
 
     - name: dotnet publish
       run: dotnet publish -c Debug -o ${{env.DOTNET_ROOT}}/myapp
