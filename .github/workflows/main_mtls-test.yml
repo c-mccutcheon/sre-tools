@@ -29,7 +29,7 @@ jobs:
         dotnet-version: '3.1.102'
 
     - name: Build with dotnet
-      run: pwd && ls -la && dotnet build --configuration Release
+      run: pwd && dir && dotnet build --configuration Release
 
     - name: dotnet publish
       run: pwd && dotnet publish -c Debug -o ${{env.DOTNET_ROOT}}/myapp
